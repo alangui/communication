@@ -1,5 +1,6 @@
 package web;
 
+import com.google.common.base.Throwables;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,7 +65,8 @@ public class ExternalServicesController {
             response.getOutputStream().write(resBytes);
         } catch (Exception e) {
             try {
-                response.getWriter().write("系统出错,请联系管理员!");
+                log.error("系统内部出错:{}", Throwables.getStackTraceAsString(e));
+                response.getWriter().write("系统内部出错,请联系管理员!");
             } catch (IOException e1) {
                 log.error("获取Servlet返回流错误!");
             }
