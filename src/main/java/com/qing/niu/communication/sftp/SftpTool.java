@@ -1,16 +1,13 @@
 package com.qing.niu.communication.sftp;
 
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.Session;
+import com.jcraft.jsch.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -39,25 +36,19 @@ public class SftpTool {
     }
 
     /**
-     * 下载文件
+     * 登陆sftp
      *
-     * @param downloadFilePath 要下载的文件所在绝对路径
-     * @param downloadFileName 要下载的文件名(sftp服务器上的文件名)
-     * @param saveFile 文件存放位置（文件名+文件所在绝对路径）
-     * @param authTypeMode 用户认证方式
+     * @param authTypeMode 认证方式
+     * @return 登陆信息
      */
-    public void download(String downloadFilePath, String downloadFileName, File saveFile, AuthTypeMode authTypeMode) throws Exception{
-        Assert.notNull(downloadFilePath,"download file absolute path is not null");
-        Assert.notNull(downloadFileName,"download file is not null");
-        Assert.notNull(saveFile,"save file location is not null");
-        Assert.notNull(authTypeMode,"auth type way is not null");
-
-        OutputStream outputStream = null;
-        ChannelSftp sftp = null;
+    public Map<String,Object> loginIn(AuthTypeMode authTypeMode){
         try {
+            ChannelSftp sftp = null;
+            Session session = null;
+
             JSch jsch = new JSch();
             logger.info("获取SFTP服务器连接username:{},host:{},port:{}",username,host,port);
-            Session session = jsch.getSession(username,host,port);
+            session = jsch.getSession(username,host,port);
             logger.info("连接成功建立");
             if (AuthTypeEnum.RSA.getCode().equals(authTypeMode.getAuthType())){
                 jsch.addIdentity(authTypeMode.getAuthValue(),"");
@@ -74,20 +65,108 @@ public class SftpTool {
             channel.connect();
             sftp = (ChannelSftp) channel;
 
-            logger.info("待下载文件地址为:" + downloadFilePath + ",文件名为:" + downloadFileName);
+            HashMap<String,Object> loginInfo = new HashMap<>();
+            loginInfo.put("sftp",sftp);
+            loginInfo.put("session",session);
+            return loginInfo;
+        } catch (JSchException e) {
+            throw new RuntimeException("user login SFTP server occur exception:" + e);
+        }
+    }
+
+    /**
+     * 退出登陆
+     *
+     * @param sftp sftp对象
+     * @param session session对象
+     */
+    public void loginOut(ChannelSftp sftp, Session session){
+        try {
+            if(null != sftp && sftp.isConnected()){
+                sftp.disconnect();
+            }
+            if (null != session && session.isConnected()){
+                session.disconnect();
+            }
+        } catch (Exception e) {
+            logger.warn("用户退出SFTP服务器出现异常:" + e);
+        }
+    }
+
+    /**
+     * 下载文件
+     *
+     * @param downloadFilePath 要下载的文件所在绝对路径
+     * @param downloadFileName 要下载的文件名(sftp服务器上的文件名)
+     * @param saveFile 文件存放位置（文件所在绝对路径）
+     * @param authTypeMode 用户认证方式
+     */
+    public void download(String downloadFilePath, String downloadFileName, File saveFile, AuthTypeMode authTypeMode) throws Exception{
+        Assert.notNull(downloadFilePath,"download file absolute path is not null");
+        Assert.notNull(downloadFileName,"download file is not null");
+        Assert.notNull(saveFile,"save file location is not null");
+        Assert.notNull(authTypeMode,"auth type way is not null");
+
+        OutputStream outputStream = null;
+        ChannelSftp sftp = null;
+        Session session = null;
+        try {
+            Map<String,Object> loginInfo = loginIn(authTypeMode);
+            sftp = (ChannelSftp) loginInfo.get("sftp");
+            session = (Session) loginInfo.get("session");
+
+            logger.info("待下载文件地址为:" + downloadFilePath + ",文件名为:" + downloadFileName + ",认证方式:" + authTypeMode.getAuthValue());
             sftp.cd(downloadFilePath);
             sftp.ls(downloadFileName);
             outputStream = new FileOutputStream(saveFile);
             sftp.get(downloadFileName,outputStream);
             logger.info("文件下载完成！");
+
         } finally {
             if (null != outputStream){
                 outputStream.close();
             }
-            if(sftp != null && sftp.isConnected()){
-                sftp.disconnect();
-            }
+            loginOut(sftp,session);
         }
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param uploadPath 上传SFTP完整路径
+     * @param uploadFile 上传文件（完整路径）
+     * @param authTypeMode 认证方式
+     */
+    public void upload(String uploadPath, String uploadFile, AuthTypeMode authTypeMode) throws Exception{
+        Assert.notNull(uploadPath,"upload path is not null");
+        Assert.notNull(uploadFile,"upload file is not null");
+
+        InputStream inputStream = null;
+        ChannelSftp sftp = null;
+        Session session = null;
+        try {
+            Map<String,Object> loginInfo = loginIn(authTypeMode);
+            sftp = (ChannelSftp) loginInfo.get("sftp");
+            session = (Session) loginInfo.get("session");
+
+            logger.info("待上传文件为:" + uploadFile + ",上传SFTP服务器路径:" + uploadPath + ",认证方式:" + authTypeMode.getAuthValue());
+            File file = new File(uploadFile);
+            inputStream = new FileInputStream(file);
+            try {
+                sftp.cd(uploadPath);
+            } catch (SftpException e) {
+                logger.error("SFTP器服务存放文件路径不存在");
+                throw new RuntimeException("upload path is not exist");
+            }
+            sftp.put(inputStream,file.getName());
+            logger.info("上传文件成功！");
+        } finally {
+            if (null != inputStream){
+                inputStream.close();
+            }
+            loginOut(sftp,session);
+        }
+
     }
 
     /**
@@ -138,5 +217,7 @@ public class SftpTool {
         //下载文件
         File saveFile = new File("/data/sftp/download.txt");
         sftpTool.download("/admin","1900008721All2018-04-03.csv",saveFile,sftpTool.new AuthTypeMode(AuthTypeEnum.PASSWORD.getCode(),"alan123456"));
+        //上传文件
+        sftpTool.upload("/admin","/data/sftp/download.txt",sftpTool.new AuthTypeMode(AuthTypeEnum.PASSWORD.getCode(),"alan123456"));
     }
 }
