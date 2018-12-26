@@ -2,8 +2,13 @@ package web;
 
 import com.google.common.base.Throwables;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -71,5 +77,13 @@ public class ExternalServicesController {
                 log.error("获取Servlet返回流错误!");
             }
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/test")
+    public String httpServiceStr(@RequestParam(required = false) Map<String,String> params){
+        log.info("服务进入。。。");
+        log.info("获取请求参数:{}",params);
+        return "ERROR";
     }
 }

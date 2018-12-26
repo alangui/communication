@@ -58,6 +58,7 @@ public class SocketRequest {
             // 取消缓存
             conn.setUseCaches(false);
             conn.setRequestProperty("Content-type","application/x-www-form-urlencoded;charset=utf-8");
+//            conn.setRequestProperty("Content-type","text/html");
             conn.setRequestMethod("POST");
             if ("https".equalsIgnoreCase(url.getProtocol())){
                 HttpsURLConnection httpsURLConnection = (HttpsURLConnection) conn;

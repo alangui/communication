@@ -32,7 +32,7 @@ public class request extends BaseSpringTest{
         requestMap.put("orderNo","123456");
         requestMap.put("amount","1");
         requestMap.put("tradeTime", new SimpleDateFormat("yyyyMmddHHmmssSSS").format(new Date()));
-        String response = socketRequest.postFromSocket("http://127.0.0.1:28380/demo",requestMap,false,null,80,20000,20000);
+        String response = socketRequest.postFromSocket("http://127.0.0.1:28380/test",requestMap,false,null,80,20000,20000);
         log.info("{}",response);
         Thread.sleep(20000L);
     }

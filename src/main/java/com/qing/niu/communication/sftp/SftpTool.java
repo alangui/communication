@@ -214,7 +214,7 @@ public class SftpTool {
 
     public static void main(String[] args) throws Exception{
         //密码认证方式
-        SftpTool sftpTool = new SftpTool("192.168.67.144","sftpuser",22);
+        SftpTool sftpTool = new SftpTool("192.168.67.144","jack",22);
         //下载文件
         File saveFile = new File("/data/sftp/download.txt");
         sftpTool.download("/admin","1900008721All2018-04-03.csv",saveFile,sftpTool.new AuthTypeMode(AuthTypeEnum.PASSWORD.getCode(),"alan123456"));
@@ -224,7 +224,7 @@ public class SftpTool {
         //密钥认证方式下载文件
         SftpTool sftpToolTwo = new SftpTool("192.168.67.144","qingniu",22);
         File saveFileTwo = new File("/data/sftp/download.txt");
-        sftpToolTwo.download("/admin","1900008721All2018-04-03.csv",saveFileTwo,sftpToolTwo.new AuthTypeMode(AuthTypeEnum.RSA.getCode(),"/data/rsa/id_rsa_qingniu"));
+        sftpToolTwo.download("/admin","T_TC_BASE.txt",saveFileTwo,sftpToolTwo.new AuthTypeMode(AuthTypeEnum.RSA.getCode(),"/data/rsa/id_rsa_qingniu"));
         //密钥认证方式上传文件( 上传会失败Permission denied，因为qingniu这个用户没有写的权限 )
         sftpToolTwo.upload("/admin","/data/sftp/download.txt",sftpToolTwo.new AuthTypeMode(AuthTypeEnum.RSA.getCode(),"/data/rsa/id_rsa_qingniu"));
     }
