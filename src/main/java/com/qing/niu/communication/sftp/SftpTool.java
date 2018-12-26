@@ -42,6 +42,8 @@ public class SftpTool {
      * @return 登陆信息
      */
     public Map<String,Object> loginIn(AuthTypeMode authTypeMode){
+        //解决JSch日志打印问题
+        JSch.setLogger(new SettleJschLogPrint());
         try {
             ChannelSftp sftp = null;
             Session session = null;
@@ -192,6 +194,22 @@ public class SftpTool {
         }
     }
 
+    /**
+     * 在slf4j日志框架里打印JSch日志
+     */
+    class SettleJschLogPrint implements com.jcraft.jsch.Logger{
+
+        @Override
+        public boolean isEnabled(int i) {
+            return true;
+        }
+
+        @Override
+        public void log(int i, String s) {
+            logger.info(s);
+        }
+    }
+
     enum AuthTypeEnum {
 
         PASSWORD("PASSWORD","密码认证"),
@@ -214,18 +232,18 @@ public class SftpTool {
 
     public static void main(String[] args) throws Exception{
         //密码认证方式
-        SftpTool sftpTool = new SftpTool("192.168.67.144","jack",22);
+        SftpTool sftpTool = new SftpTool("192.168.79.151","albert",22);
         //下载文件
-        File saveFile = new File("/data/sftp/download.txt");
-        sftpTool.download("/admin","1900008721All2018-04-03.csv",saveFile,sftpTool.new AuthTypeMode(AuthTypeEnum.PASSWORD.getCode(),"alan123456"));
+        File saveFile = new File("/data/sftp/verifyfile_01.txt");
+        sftpTool.download("/verifyfile","verifyfile_01.csv",saveFile,sftpTool.new AuthTypeMode(AuthTypeEnum.PASSWORD.getCode(),"alan123456"));
         //上传文件
-        sftpTool.upload("/admin","/data/sftp/download.txt",sftpTool.new AuthTypeMode(AuthTypeEnum.PASSWORD.getCode(),"alan123456"));
+        sftpTool.upload("/verifyfile","/data/sftp/verifyfile_01.txt",sftpTool.new AuthTypeMode(AuthTypeEnum.PASSWORD.getCode(),"alan123456"));
 
         //密钥认证方式下载文件
-        SftpTool sftpToolTwo = new SftpTool("192.168.67.144","qingniu",22);
-        File saveFileTwo = new File("/data/sftp/download.txt");
-        sftpToolTwo.download("/admin","T_TC_BASE.txt",saveFileTwo,sftpToolTwo.new AuthTypeMode(AuthTypeEnum.RSA.getCode(),"/data/rsa/id_rsa_qingniu"));
+        SftpTool sftpToolTwo = new SftpTool("192.168.79.151","qingniu",22);
+        File saveFileTwo = new File("/data/sftp/verifyfile_01.txt");
+        sftpToolTwo.download("/verifyfile","verifyfile_01.csv",saveFileTwo,sftpToolTwo.new AuthTypeMode(AuthTypeEnum.RSA.getCode(),"/data/rsa/id_rsa_qingniu"));
         //密钥认证方式上传文件( 上传会失败Permission denied，因为qingniu这个用户没有写的权限 )
-        sftpToolTwo.upload("/admin","/data/sftp/download.txt",sftpToolTwo.new AuthTypeMode(AuthTypeEnum.RSA.getCode(),"/data/rsa/id_rsa_qingniu"));
+        sftpToolTwo.upload("/verifyfile","/data/sftp/verifyfile_01.txt",sftpToolTwo.new AuthTypeMode(AuthTypeEnum.RSA.getCode(),"/data/rsa/id_rsa_qingniu"));
     }
 }
