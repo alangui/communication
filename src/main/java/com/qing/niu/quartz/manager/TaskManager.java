@@ -85,7 +85,7 @@ public class TaskManager {
             if (misfireInstruction == 1){
                 cronScheduleBuilder.withMisfireHandlingInstructionFireAndProceed();
             }
-            if (misfireInstruction ==2 ){
+            if (misfireInstruction == 2){
                 cronScheduleBuilder.withMisfireHandlingInstructionDoNothing();
             }
         }
