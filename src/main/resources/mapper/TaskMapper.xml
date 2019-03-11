@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.qing.niu.quartz.mapper.TaskMapper">
+
+    <resultMap id="BaseResultMap" type="com.qing.niu.quartz.model.TaskResDTO">
+        <result column="TRIGGER_NAME"              property="taskName"            jdbcType="VARCHAR" />
+        <result column="TRIGGER_GROUP"              property="taskGroup"            jdbcType="VARCHAR" />
+        <result column="PREV_FIRE_TIME"              property="preFireTime"            jdbcType="BIGINT" />
+        <result column="NEXT_FIRE_TIME"              property="nextFireTime"            jdbcType="BIGINT" />
+        <result column="TRIGGER_STATE"              property="taskStatus"            jdbcType="VARCHAR" />
+        <result column="CRON_EXPRESSION"              property="cronExpression"            jdbcType="VARCHAR" />
+        <result column="STATE"              property="scheduleStatus"            jdbcType="VARCHAR" />
+        <result column="JOB_DATA"           property="jobData"         jdbcType="BLOB"/>
+    </resultMap>
+
+    <sql id="Base_Sql">
+        select a.TRIGGER_NAME,a.TRIGGER_GROUP,a.PREV_FIRE_TIME,a.NEXT_FIRE_TIME,a.TRIGGER_STATE,b.CRON_EXPRESSION,c.STATE,
+        a.JOB_DATA from QRTZ_TRIGGERS a
+        inner join QRTZ_CRON_TRIGGERS b on a.TRIGGER_NAME = b.TRIGGER_NAME and a.TRIGGER_GROUP = b.TRIGGER_GROUP
+        left join QRTZ_FIRED_TRIGGERS c on a.TRIGGER_NAME = c.TRIGGER_NAME and a.TRIGGER_GROUP = c.TRIGGER_GROUP
+    </sql>
+    <sql id="Base_Where">
+        where a.TRIGGER_TYPE = "CRON"
+            <if test="taskName!=null and taskName!=''">
+                AND a.TRIGGER_NAME = #{taskName,jdbcType=VARCHAR}
+            </if>
+            <if test="taskGroup!=null and taskGroup!=''">
+                AND a.TRIGGER_GROUP = #{taskGroup,jdbcType=VARCHAR}
+            </if>
+    </sql>
+    <!-- 根据任务名称查询任务  -->
+    <select id="selectByTaskName" resultMap="BaseResultMap" parameterType="com.qing.niu.quartz.model.TaskQueryDTO">
+        <include refid="Base_Sql"/>
+        WHERE
+            a.TRIGGER_NAME = #{taskName,jdbcType=VARCHAR}
+        AND
+            a.TRIGGER_GROUP = #{taskGroup,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询任务个数 -->
+    <select id="selectTaskCount" resultType="java.lang.Integer" parameterType="com.qing.niu.quartz.model.TaskQueryPagingDTO">
+        select count(1) from QRTZ_TRIGGERS a
+        <include refid="Base_Where" />
+    </select>
+
+    <!-- 查询任务列表 -->
+    <select id="selectTaskPage" resultMap="BaseResultMap" parameterType="com.qing.niu.quartz.model.TaskQueryPagingDTO">
+        <include refid="Base_Sql"/>
+        <include refid="Base_Where"/>
+        order by a.next_fire_time
+        limit #{startRow},#{pageCount}
+    </select>
+</mapper>
