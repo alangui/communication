@@ -6,7 +6,7 @@
        default-lazy-init="false">
 
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="configLocation" value="classpath:quartz.properties"/>
+        <property name="configLocation" value="classpath:properties/quartz.properties"/>
         <property name="schedulerName" value="taskScheduler" />
         <property name="overwriteExistingJobs" value="false"/>
         <property name="dataSource" ref="dataSource"/>

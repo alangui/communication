@@ -2,11 +2,17 @@ package com.qing.niu.quartz.demo;
 
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.*;
+import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.Date;
+
+import static org.quartz.DateBuilder.evenMinuteDate;
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.TriggerBuilder.newTrigger;
 
 /**
  * <p>
@@ -18,7 +24,7 @@ import java.io.FileFilter;
  */
 public class ScanDirectoryJob implements Job{
 
-    private Logger log = LoggerFactory.getLogger(ScanDirectoryJob.class);
+    private static Logger log = LoggerFactory.getLogger(ScanDirectoryJob.class);
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -62,5 +68,30 @@ public class ScanDirectoryJob implements Job{
             String lowerCaseFileName = pathname.getName().toLowerCase();
             return (pathname.isFile() && (lowerCaseFileName.indexOf(extension) > 0)) ? true : false;
         }
+    }
+
+    public static void main(String[] args) throws Exception{
+        log.info("----------- Initializing -----------");
+        SchedulerFactory schedulerFactory = new StdSchedulerFactory();
+        Scheduler scheduler = schedulerFactory.getScheduler();
+        log.info("----------- Initializing Complete -----------");
+
+        log.info("----------- Schedule Job -------------");
+        Date runTime = evenMinuteDate(new Date());
+        JobDetail jobDetail = newJob(ScanDirectoryJob.class).withIdentity("job1","group1").build();
+        jobDetail.getJobDataMap().put("SCAN_DIR","/java/apache-maven-3.3.9/conf");
+        Trigger trigger = newTrigger().withIdentity("trigger1","triggerGroup1").startAt(runTime).build();
+
+        scheduler.scheduleJob(jobDetail,trigger);
+        log.info(jobDetail.getKey() + " will run at" + runTime);
+        scheduler.start();
+
+        log.info("---------- started schedule ----------");
+        log.info("------- waiting 65 seconds ------");
+        Thread.sleep(65L * 1000L);
+
+        log.info("--------- shutting down ---------");
+        scheduler.shutdown();
+        log.info("--------- shutting complete ---------");
     }
 }
