@@ -37,7 +37,7 @@ public class ZkTest implements Watcher{
         ZookeeperBeanFactory zookeeperBeanFactory = new ZookeeperBeanFactory(zookeeperAddress,this);
         ZookeeperManager zookeeperManager = new ZookeeperManager(zookeeperBeanFactory.getZooKeeper());
         logger.info("zk 连接成功...");
-        Stat rootStat = zookeeperManager.existed("/root");
+        Stat rootStat = zookeeperManager.existed(ROOT_PATH);
         if (null == rootStat){
             zookeeperManager.createPath(ROOT_PATH);
             logger.info("zookeeper节点{}创建成功",ROOT_PATH);
@@ -48,7 +48,7 @@ public class ZkTest implements Watcher{
             logger.info("zookeeper节点{}创建成功",SERVER_LIST);
         }
         //注册 server Node
-        String serverNode = SERVER_LIST + IpUtils.getLocalIP().replace("\\.","_");
+        String serverNode = SERVER_LIST + "/" + IpUtils.getLocalIP().replaceAll("\\.","_");
         Stat serverNodeStat = zookeeperManager.existed(serverNode);
         if (null == serverNodeStat){
             zookeeperManager.createPath(serverNode);
