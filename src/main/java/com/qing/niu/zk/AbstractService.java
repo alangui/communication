@@ -20,7 +20,7 @@ public abstract class AbstractService implements Watcher{
 
     protected String ROOT_PATH = "/root";
 
-    protected String SERVER_PATH = ROOT_PATH + "/serverList";
+    protected String SERVER_PATH = ROOT_PATH + "/service";
 
     protected ZookeeperManager zookeeperManager;
 

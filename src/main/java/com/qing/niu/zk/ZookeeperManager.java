@@ -17,10 +17,10 @@ import java.util.List;
  */
 public class ZookeeperManager {
 
-    private static ZooKeeper zooKeeper;
+    private ZooKeeper zooKeeper;
 
     public ZookeeperManager(ZooKeeper zooKeeper){
-        ZookeeperManager.zooKeeper = zooKeeper;
+        this.zooKeeper = zooKeeper;
     }
 
     public void createPath(String path) throws UnsupportedEncodingException, KeeperException, InterruptedException {
