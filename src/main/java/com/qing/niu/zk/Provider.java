@@ -21,7 +21,6 @@ public class Provider extends AbstractService {
 
     public void registry() throws Exception {
         init();
-        logger.info("zookeeper manager：{}",zookeeperManager);
         Stat rootStat = zookeeperManager.existed(ROOT_PATH);
         if (null == rootStat) {
             zookeeperManager.createPath(ROOT_PATH);
