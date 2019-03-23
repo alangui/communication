@@ -25,7 +25,7 @@ public abstract class AbstractService implements Watcher{
     protected ZookeeperManager zookeeperManager;
 
     protected void init() throws IOException {
-        String zookeeperAddress = "192.168.79.152:2181,192.168.79.153:2181,192.168.79.154:2181";
+        String zookeeperAddress = "192.168.67.146:2181,192.168.67.147:2181,192.168.67.148:2181";
         ZookeeperBeanFactory zookeeperBeanFactory = new ZookeeperBeanFactory(zookeeperAddress,this);
         zookeeperManager = new ZookeeperManager(zookeeperBeanFactory.getZooKeeper());
         logger.info("zk 连接成功...");

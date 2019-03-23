@@ -28,11 +28,11 @@ public class Consumer extends AbstractService {
             logger.info("从本地缓存中查询到provider服务器列表");
             return serverList;
         }
+        init();
         return queryServerList();
     }
 
     public List<String> queryServerList() throws IOException {
-        init();
         try {
             Stat rootStat = zookeeperManager.existed(ROOT_PATH);
             if (null == rootStat){
@@ -50,7 +50,7 @@ public class Consumer extends AbstractService {
             for (String node : nodes){
                 byte[] bytes = zookeeperManager.getData(SERVER_PATH + "/" + node);
                 serverList.add(new String(bytes,"UTF-8"));
-                logger.debug("服务节点：{},数据:{}",node,new String(bytes,"UTF-8"));
+                logger.info("服务节点：{},数据:{}",node,new String(bytes,"UTF-8"));
             }
         } catch (Exception e) {
             logger.error("获取服务异常:{}",e.getMessage());
