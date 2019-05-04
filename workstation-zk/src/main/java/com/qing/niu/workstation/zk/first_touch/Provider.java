@@ -1,6 +1,6 @@
-package com.qing.niu.zk;
+package com.qing.niu.workstation.zk.first_touch;
 
-import com.qing.niu.util.IpUtils;
+import com.qing.niu.workstation.util.IpUtils;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.data.Stat;

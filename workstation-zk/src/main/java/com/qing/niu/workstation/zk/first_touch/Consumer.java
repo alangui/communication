@@ -1,6 +1,7 @@
-package com.qing.niu.zk;
+package com.qing.niu.workstation.zk.first_touch;
 
 import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +63,7 @@ public class Consumer extends AbstractService {
     @Override
     public void process(WatchedEvent watchedEvent) {
         logger.warn("监听到服务节点变换:{}",watchedEvent);
-        if (watchedEvent.getType() == Event.EventType.NodeChildrenChanged
+        if (watchedEvent.getType() == Watcher.Event.EventType.NodeChildrenChanged
                 && SERVER_PATH.equals(watchedEvent.getPath())){
             try {
                 queryServerList();

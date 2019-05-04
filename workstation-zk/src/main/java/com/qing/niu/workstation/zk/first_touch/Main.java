@@ -1,4 +1,4 @@
-package com.qing.niu.zk;
+package com.qing.niu.workstation.zk.first_touch;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

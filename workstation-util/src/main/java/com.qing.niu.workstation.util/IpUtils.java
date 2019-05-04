@@ -1,4 +1,4 @@
-package com.qing.niu.util;
+package com.qing.niu.workstation.util;
 
 import org.apache.commons.lang3.StringUtils;
 
