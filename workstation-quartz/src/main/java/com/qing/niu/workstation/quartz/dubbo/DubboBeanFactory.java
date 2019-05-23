@@ -28,10 +28,10 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class DubboBeanFactory {
 
-    @Autowired
+//    @Autowired
     private ApplicationConfig applicationConfig;
 
-    @Autowired
+//    @Autowired
     private List<RegistryConfig> registryConfigs;
 
     private static Map<String,ReferenceConfig<Task>> taskMap = new ConcurrentHashMap<>();

@@ -26,7 +26,7 @@ public class TaskManager {
     @Autowired
     private SchedulerFactoryBean schedulerFactoryBean;
 
-    @Autowired
+//    @Autowired
     private TaskMapper taskMapper;
 
     /**
