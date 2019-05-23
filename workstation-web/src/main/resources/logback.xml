@@ -58,7 +58,7 @@
     <logger level="${logger.outside.logLevel}" name="java.sql"/>
     <logger level="${logger.outside.logLevel}" name="ch.qos.logback"/>
     <logger level="${logger.outside.logLevel}" name="com.alibaba"/>
-    <logger level="DEBUG" name="org"/>
+    <logger level="${logger.outside.logLevel}" name="org"/>
     <logger level="${logger.outside.logLevel}" name="jndi"/>
     <logger level="${logger.outside.logLevel}" name="org.jdbcdslog"/>
     <logger level="${logger.outside.logLevel}" name="kafka"/>
