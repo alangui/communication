@@ -13,10 +13,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.service.http</groupId>
-            <artifactId>workstation-util</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
             <version>2.2.3</version>
@@ -40,6 +36,10 @@
                     <artifactId>spring-expression</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
         </dependency>
     </dependencies>
 </project>
