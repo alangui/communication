@@ -13,6 +13,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.service.http</groupId>
+            <artifactId>workstation-util</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
             <version>2.2.3</version>
