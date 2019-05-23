@@ -12,6 +12,9 @@
         <module>workstation-spring</module>
         <module>workstation-zk</module>
         <module>workstation-util</module>
+        <module>workstation-web</module>
+        <module>workstation-dal</module>
+        <module>workstation-quartz</module>
     </modules>
 
     <properties>
@@ -19,7 +22,6 @@
         <java.encoding>UTF-8</java.encoding>
         <logback.version>1.0.13</logback.version>
         <lombok.version>1.16.6</lombok.version>
-        <spring.boot.version>1.2.5.RELEASE</spring.boot.version>
         <maven-compiler-plugin>3.1</maven-compiler-plugin>
         <maven-dependency-plugin>2.8</maven-dependency-plugin>
         <maven-antrun-plugin>1.8</maven-antrun-plugin>
@@ -29,6 +31,11 @@
         <maven-source-plugin>2.4</maven-source-plugin>
 
         <zk.version>3.4.9</zk.version>
+        <spring.boot.version>2.1.0.RELEASE</spring.boot.version>
+        <spring-boot-starter-web.version>2.1.0.RELEASE</spring-boot-starter-web.version>
+        <spring-boot-starter-thymeleaf.version>2.1.0.RELEASE</spring-boot-starter-thymeleaf.version>
+        <spring-boot-starter-jetty.version>2.1.0.RELEASE</spring-boot-starter-jetty.version>
+        <spring-jdbc.version>4.2.4.RELEASE</spring-jdbc.version>
     </properties>
 
     <dependencyManagement>
@@ -49,6 +56,21 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>workstation-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>workstation-dal</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>workstation-quartz</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.zookeeper</groupId>
                 <artifactId>zookeeper</artifactId>
                 <version>${zk.version}</version>
@@ -62,6 +84,62 @@
                         <artifactId>log4j</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-thymeleaf</artifactId>
+                <version>${spring-boot-starter-thymeleaf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot-starter-web.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-jetty</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-jetty</artifactId>
+                <version>${spring-boot-starter-jetty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>4.3.8.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>4.2.4.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${spring-jdbc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>4.2.4.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>1.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>3.3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>4.1.7.RELEASE</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -83,22 +161,6 @@
             <version>${lombok.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring.boot.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-jetty</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jetty</artifactId>
-            <version>1.2.5.RELEASE</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.2</version>
@@ -114,11 +176,6 @@
             <version>4.12</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>4.1.7.RELEASE</version>
-        </dependency>
-        <dependency>
             <groupId>net.sf.oval</groupId>
             <artifactId>oval</artifactId>
             <version>1.81</version>
@@ -127,42 +184,6 @@
             <groupId>com.jcraft</groupId>
             <artifactId>jsch</artifactId>
             <version>0.1.53</version>
-        </dependency>
-        <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz</artifactId>
-            <version>2.2.3</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>4.2.4.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>4.2.4.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>4.2.4.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-spring</artifactId>
-            <version>1.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>3.3.0</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -235,7 +256,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.qing.niu.communication.Application</mainClass>
+                    <mainClass>com.qing.niu.workstation.web.Application</mainClass>
                 </configuration>
             </plugin>
             <plugin>
