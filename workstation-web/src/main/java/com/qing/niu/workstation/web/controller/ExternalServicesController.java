@@ -80,6 +80,6 @@ public class ExternalServicesController {
     public String httpServiceStr(@RequestParam(required = false) Map<String,String> params){
         log.info("服务进入。。。");
         log.info("获取请求参数:{}",params);
-        return "ERROR";
+        return "Hello";
     }
 }
