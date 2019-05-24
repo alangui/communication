@@ -11,4 +11,10 @@
 
     <artifactId>workstation-spring</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.service.http</groupId>
+            <artifactId>workstation-util</artifactId>
+        </dependency>
+    </dependencies>
 </project>
