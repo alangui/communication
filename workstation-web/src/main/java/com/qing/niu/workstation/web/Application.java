@@ -9,6 +9,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * <p>
@@ -19,10 +20,11 @@ import org.springframework.context.annotation.ImportResource;
  * @version 1.0.0
  * @date 2018/10/9
  */
+@Slf4j
+@EnableScheduling
 @Configuration
 @SpringBootApplication(exclude = {SpringDataWebAutoConfiguration.class})
 @ImportResource({"classpath:spring/application-context.xml"})
-@Slf4j
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
