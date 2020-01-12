@@ -21,6 +21,10 @@
             <artifactId>workstation-util</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.service.http</groupId>
+            <artifactId>workstation-spring</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
             <exclusions>
