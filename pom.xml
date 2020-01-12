@@ -15,6 +15,7 @@
         <module>workstation-web</module>
         <module>workstation-dal</module>
         <module>workstation-quartz</module>
+        <module>workstation-velocity</module>
     </modules>
 
     <properties>
@@ -68,6 +69,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>workstation-quartz</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.service.http</groupId>
+                <artifactId>workstation-velocity</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
