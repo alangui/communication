@@ -23,9 +23,9 @@ public class ThreadSleep implements Runnable{
         while (true) {
             logger.info("{}", new Date());
             try {
-//                synchronized (this) {
-//                    wait();
-//                }
+                synchronized (this) {
+                    wait();
+                }
                 TimeUnit.SECONDS.sleep(1L);
             } catch (InterruptedException e) {
                 logger.warn("thread sleep wake up");
@@ -34,10 +34,19 @@ public class ThreadSleep implements Runnable{
     }
 
     public static void main(String[] args) {
+        Thread main = Thread.currentThread();
+        logger.info("main线程名信息:{}、{}、{}、{}、{}、{}、{}",
+                main.getId(),
+                main.getName(),
+                main.getThreadGroup().getMaxPriority(),
+                main.getPriority(),
+                main.getContextClassLoader(),
+                main.getState(),
+                main.getStackTrace());
         Thread task = new Thread(new ThreadSleep());
         task.start();
         try {
-            TimeUnit.SECONDS.sleep(10L);
+            TimeUnit.SECONDS.sleep(1L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

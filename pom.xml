@@ -16,6 +16,9 @@
         <module>workstation-dal</module>
         <module>workstation-quartz</module>
         <module>workstation-velocity</module>
+        <module>workstation-dubbo</module>
+        <module>workstation-redis</module>
+        <module>workstation-temp</module>
     </modules>
 
     <properties>
