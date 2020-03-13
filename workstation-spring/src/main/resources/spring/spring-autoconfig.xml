@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="employee" class="com.qing.niu.workstation.spring.springboot.autoconfig.Employee">
+        <property name="name" value="张三"/>
+        <property name="age" value="18"/>
+        <property name="sex" value="男"/>
+    </bean>
+
+    <bean id="product" class="com.qing.niu.workstation.spring.springboot.autoconfig.Product">
+        <property name="productName" value="口罩"/>
+        <property name="productType" value="轻工业"/>
+        <property name="productSubType" value="生活用品"/>
+    </bean>
+
+    <bean id="company" class="com.qing.niu.workstation.spring.springboot.autoconfig.Company">
+        <property name="employee" ref="employee"/>
+        <property name="product" ref="product"/>
+    </bean>
+
+    <bean id="myBeanFactoryPost" class="com.qing.niu.workstation.spring.springboot.autoconfig.version1.MyBeanFactoryPost"/>
+</beans>

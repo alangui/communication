@@ -19,6 +19,7 @@
         <module>workstation-dubbo</module>
         <module>workstation-redis</module>
         <module>workstation-temp</module>
+        <module>workstation-mvc</module>
     </modules>
 
     <properties>

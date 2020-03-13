@@ -4,6 +4,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,10 +29,8 @@ public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor{
         System.out.println("对beanDefinition的处理:" + beanFactory.getBeanDefinitionCount());
         BeanDefinition beanDefinition = beanFactory.getBeanDefinition("person");
         System.out.println("beanDefinition:" + beanDefinition.getPropertyValues());
+        //不生效
         beanDefinition.getPropertyValues().addPropertyValue("name","李四");
         System.out.println("beanDefinition:" + beanDefinition.getPropertyValues());
-
-        BeanDefinition beanDefinition1 = beanFactory.getBeanDefinition("persion1");
-        beanDefinition1.getPropertyValues().addPropertyValue("phone","15688888888");
     }
 }
