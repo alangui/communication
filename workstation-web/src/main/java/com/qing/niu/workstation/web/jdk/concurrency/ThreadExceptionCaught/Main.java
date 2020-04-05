@@ -18,6 +18,6 @@ public class Main {
             threadMonitor.service("task" + i);
         }
         Thread.sleep(2000);
-//        System.exit(0);
+//        SystemInfo.exit(0);
     }
 }
