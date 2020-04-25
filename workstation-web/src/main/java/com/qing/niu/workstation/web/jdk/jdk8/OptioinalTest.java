@@ -30,6 +30,5 @@ public class OptioinalTest {
         System.out.println("--------------------------");
         System.out.println(optional.orElseGet(() -> "888"));
 
-
     }
 }
