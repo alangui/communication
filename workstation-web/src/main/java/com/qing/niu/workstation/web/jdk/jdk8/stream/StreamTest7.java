@@ -2,7 +2,6 @@ package com.qing.niu.workstation.web.jdk.jdk8.stream;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>

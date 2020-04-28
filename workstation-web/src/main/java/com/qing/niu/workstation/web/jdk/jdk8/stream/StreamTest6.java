@@ -34,6 +34,5 @@ public class StreamTest6 {
                 filter(element -> element > 2).mapToInt(element -> element * 2).skip(2).limit(2).sum();
         System.out.println(sum);
 
-
     }
 }
