@@ -3,6 +3,7 @@ package com.qing.niu.workstation.spring.xml;
 import com.qing.niu.workstation.spring.xml.annotation.base.MsgBody;
 import com.qing.niu.workstation.spring.xml.annotation.base.MsgHeader;
 import com.qing.niu.workstation.spring.xml.annotation.base.PayApply;
+import com.qing.niu.workstation.spring.xml.modeltoxml.ToXmlUtil;
 
 public class main {
 
@@ -18,6 +19,6 @@ public class main {
         PayApply payApply = new PayApply();
         payApply.setMsgHeader(msgHeader);
         payApply.setMsgBody(msgBody);
-        System.out.println(payApply.toXml(true));
+        System.out.println(new ToXmlUtil().toXml(payApply,true,"http://www.springframework.org/schema/beans"));
     }
 }
