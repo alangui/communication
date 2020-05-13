@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+
+    <property name="logger.outside.logLevel" value="INFO"/>
+    <property name="logger.logLevel" value="INFO"/>
+    <property name="logger.root.logLevel" value="WARN"/>
+    <property name="logger.logRoot" value="/u01/data/log"/>
+    <property name="logger.name" value="communication"/>
+
     <!-- 控台打印 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder charset="utf-8"> <!-- encoder 可以指定字符集，对于中文输出有意义 -->
@@ -9,6 +16,7 @@
             </Pattern>
         </encoder>
     </appender>
+
     <!-- error 级别日志文件 -->
     <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>${logger.logRoot}/${logger.name}-error.log</File>
@@ -56,22 +64,19 @@
     <logger level="${logger.outside.logLevel}" name="com.mchange" />
     <logger level="${logger.outside.logLevel}" name="com.mangofactory"/>
     <logger level="${logger.outside.logLevel}" name="java.sql"/>
-    <logger level="${logger.outside.logLevel}" name="ch.qos.logback"/>
     <logger level="${logger.outside.logLevel}" name="com.alibaba"/>
     <logger level="${logger.outside.logLevel}" name="org"/>
     <logger level="${logger.outside.logLevel}" name="jndi"/>
     <logger level="${logger.outside.logLevel}" name="org.jdbcdslog"/>
     <logger level="${logger.outside.logLevel}" name="kafka"/>
-    <logger level="INFO"          name="com.qing.niu"/>
+    <logger level="${logger.outside.logLevel}" name="ch.qos.logback"/>
+    <logger level="${logger.logLevel}" name="com.qing.niu"/>
 
-    <root level="${logger.logLevel}">
+    <root level="${logger.root.logLevel}">
         <!-- 去除错误日志 -->
         <appender-ref ref="logfile"/>
         <!-- 只打印错误日志 -->
         <appender-ref ref="error"/>
-    </root>
-
-    <root level="DEBUG">
         <!--控台-->
         <appender-ref ref="STDOUT"/>
     </root>

@@ -20,6 +20,7 @@
         <module>workstation-redis</module>
         <module>workstation-temp</module>
         <module>workstation-mvc</module>
+        <module>workstation-log</module>
     </modules>
 
     <properties>
