@@ -19,13 +19,30 @@ public class MyComparatorTest {
 
     public static void main(String[] args) {
         List<String> list = Arrays.asList("nihao","hello","world","welcome");
-//        list.sort((a,b) -> b.length() - a.length());
-
-//        list.sort(Comparator.comparingInt(String::length).reversed());
-
-//        list.sort(Comparator.comparingInt(item -> item.length()));
-//        Collections.sort(list,Comparator.comparingInt(item -> item.length()));
+        //1
+        list.sort((a,b) -> b.length() - a.length());
+        //2
+        list.sort(Comparator.comparingInt(String::length).reversed());
+        //3
+        list.sort(Comparator.comparingInt(item -> item.length()));
+        //4
+        Collections.sort(list,Comparator.comparingInt(item -> item.length()));
+        //5
         list.sort(Comparator.comparingInt((String item) -> item.length()).reversed());
+        //6
+        list.sort(Comparator.comparingInt(String::length).thenComparing(String.CASE_INSENSITIVE_ORDER));
+        //7
+        list.sort(Comparator.comparingInt(String::length).
+                thenComparing((item1,item2) -> item1.toLowerCase().compareTo(item2.toLowerCase())));
+        //8
+        list.sort(Comparator.comparingInt(String::length).thenComparing(Comparator.comparing(String::toLowerCase)));
+        //9
+        list.sort(Comparator.comparingInt(String::length).
+                thenComparing(Comparator.comparing(String::toLowerCase,Comparator.reverseOrder())));
+        //10
+        list.sort(Comparator.comparingInt(String::length).reversed().
+                thenComparing(Comparator.comparing(String::toLowerCase, Comparator.reverseOrder())).
+                thenComparing(Comparator.reverseOrder()));
         System.out.println(list);
     }
 }

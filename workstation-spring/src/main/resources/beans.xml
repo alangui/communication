@@ -6,4 +6,18 @@
     <bean id="withholdReqDTO" class="com.qing.niu.workstation.spring.model.WithholdReqDTO">
         <constructor-arg name="tradeNo" value="1234567890"/>
     </bean>
+
+    <bean id="car" class="com.qing.niu.workstation.spring.FactoryBean.CarFactoryBean">
+        <property name="carInfo" value="布加迪,400,20000000"/>
+    </bean>
+
+    <bean id="testA" class="com.qing.niu.workstation.spring.circledependence.TestA">
+        <property name="testB" ref="testB"/>
+    </bean>
+    <bean id="testB" class="com.qing.niu.workstation.spring.circledependence.TestB">
+        <property name="testC" ref="testC"/>
+    </bean>
+    <bean id="testC" class="com.qing.niu.workstation.spring.circledependence.TestC">
+        <property name="testA" ref="testA"/>
+    </bean>
 </beans>
