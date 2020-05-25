@@ -20,4 +20,6 @@
     <bean id="testC" class="com.qing.niu.workstation.spring.circledependence.TestC">
         <property name="testA" ref="testA"/>
     </bean>
+
+    <bean id="testInstantiationAwareBeanPostProcessor" class="com.qing.niu.workstation.spring.basic.beanpostprocessors.TestInstantiationAwareBeanPostProcessorImpl"/>
 </beans>

@@ -10,9 +10,18 @@ package com.qing.niu.workstation.spring.model;
  */
 public class WithholdReqDTO {
 
+    static {
+        System.out.println("WithholdReqDTO class initial");
+    }
+
     public String tradeNo;
 
+    public WithholdReqDTO() {
+        System.out.println("WithholdReqDTO 无参构造实例化实例化");
+    }
+
     public WithholdReqDTO(String tradeNo) {
+        System.out.println("WithholdReqDTO 实例化");
         this.tradeNo = tradeNo;
     }
 
