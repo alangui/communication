@@ -21,6 +21,7 @@
         <module>workstation-temp</module>
         <module>workstation-mvc</module>
         <module>workstation-log</module>
+        <module>workstation-netty</module>
     </modules>
 
     <properties>
