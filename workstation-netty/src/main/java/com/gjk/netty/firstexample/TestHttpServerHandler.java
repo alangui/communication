@@ -28,7 +28,7 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
 
             URI uri = new URI(httpRequest.uri());
             if ("/favicon.ico".equals(uri.getPath())){
-                System.out.println("请求favicon.cio");
+                System.out.println("请求favicon.ico");
                 return;
             }
 
