@@ -32,19 +32,16 @@ public class ThreadMonitor {
         logger.info("thread monitor init...");
         WorkerThread workerThread = new WorkerThread();
         workerThread.setName("worker0-" + threadIndex++);
-        workerThread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread t, Throwable e) {
-                logger.info("抛出异常线程为:{},线程状态:{}",t.getName(),t.isAlive());
+        workerThread.setUncaughtExceptionHandler((t, e) -> {
+            logger.info("抛出异常线程为:{},线程状态:{}",t.getName(),t.isAlive());
 
-                logger.info("抛出错误:{}",e.toString());
+            logger.info("抛出错误:{}",e.toString());
 
-                logger.info("restart thread monitor");
+            logger.info("restart thread monitor");
 
-                inited = false;
+            inited = false;
 
-                init();
-            }
+            init();
         });
         workerThread.start();
         inited = true;
