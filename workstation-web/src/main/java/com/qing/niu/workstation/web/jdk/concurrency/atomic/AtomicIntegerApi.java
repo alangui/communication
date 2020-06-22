@@ -13,6 +13,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class AtomicIntegerApi {
 
+    private final static AtomicInteger value = new AtomicInteger(0);
+
+    private static Thread lockedThread;
+
     public static void main(String[] args) {
         //create
         AtomicInteger atomicInteger = new AtomicInteger();
@@ -27,5 +31,27 @@ public class AtomicIntegerApi {
         System.out.println(atomicInteger1.getAndAdd(10));
         System.out.println(atomicInteger1.get());
 
+    }
+
+    public static boolean tryLock(){
+        if (value.compareAndSet(0,1)){
+            return true;
+        }
+        lockedThread = Thread.currentThread();
+        return false;
+    }
+
+    public static void unLock(){
+        if (value.get() == 0 || Thread.currentThread() != lockedThread){
+            return;
+        }
+        value.compareAndSet(1,0);
+    }
+
+    private static void doSomething() throws InterruptedException {
+        synchronized (AtomicIntegerApi.class){
+            System.out.println(Thread.currentThread().getName() + " get the lock");
+            Thread.sleep(100000);
+        }
     }
 }
