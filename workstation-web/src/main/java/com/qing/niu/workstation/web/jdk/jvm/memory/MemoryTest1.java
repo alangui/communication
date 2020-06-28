@@ -39,6 +39,7 @@ public class MemoryTest1 {
         List<MemoryTest1> list = new ArrayList<>();
         for (;;){
             list.add(new MemoryTest1());
+            System.gc();
         }
     }
 }
