@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <context:component-scan base-package="com.qing.niu.workstation.spring.aop.xml"/>
+
+    <bean id="xmlActionDemo" class="com.qing.niu.workstation.spring.aop.xml.XmlActionDemo"/>
+
+    <bean id="logAspect" class="com.qing.niu.workstation.spring.aop.xml.LogAspect"/>
+
+    <aop:config expose-proxy="true">
+        <aop:aspect id="logAspect" ref="logAspect">
+            <aop:pointcut id="logPointCut" expression="execution(* com.qing.niu.workstation.spring.aop.xml.XmlActionDemo.placeOrder(..))"/>
+            <aop:before method="before" pointcut-ref="logPointCut" arg-names="joinPoint"/>
+            <aop:after method="after" pointcut-ref="logPointCut" arg-names="joinPoint"/>
+            <aop:around method="around" pointcut="execution(* com.qing.niu.workstation.spring.aop.xml.XmlActionDemo.realTimePay(..))" arg-names="joinPoint"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
