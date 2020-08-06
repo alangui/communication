@@ -1,4 +1,4 @@
-package com.qing.niu.workstation.spring.springboot;
+package com.qing.niu.workstation.spring.swagger;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,16 +9,17 @@ import org.springframework.context.annotation.ComponentScan;
  * </p>
  *
  * @Author Gui Jin Kang
- * @Date 2020/3/9 16:01
+ * @Date 2020/8/6
  * @ProjectName communication
  * @Version 1.0.0
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.qing.niu.workstation.spring"})
-public class SpingBootApplicationStartUp {
+@ComponentScan(basePackages = {"com.qing.niu.workstation.spring.swagger"})
+public class SpringBootStart {
 
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(SpingBootApplicationStartUp.class);
+        SpringApplication springApplication = new SpringApplication(SpringBootStart.class);
         springApplication.run(args);
     }
+
 }
