@@ -22,6 +22,7 @@
         <module>workstation-mvc</module>
         <module>workstation-log</module>
         <module>workstation-netty</module>
+        <module>workstation-design-pattern</module>
     </modules>
 
     <properties>
