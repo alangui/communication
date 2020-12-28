@@ -22,7 +22,7 @@ public class MainConfig {
         return new Person();
     }
 
-    @Bean(initMethod = "init",destroyMethod = "myDestroy")
+//    @Bean(initMethod = "init",destroyMethod = "myDestroy")
     public Persion1 persion1(){
         Persion1 persion1 = new Persion1();
         persion1.setName("张三");

@@ -17,9 +17,11 @@ public class Main {
         System.out.println("容器启动，开始初始化。。。");
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(MainConfig.class);
         System.out.println("容器初始化完成");
-        Persion1 persion1 = (Persion1) ctx.getBean("persion1");
-        System.out.println(persion1);
+//        Persion1 persion1 = (Persion1) ctx.getBean("persion1");
+//        System.out.println(persion1);
+        Person person = (Person) ctx.getBean("person");
+        System.out.println(person);
         System.out.println("开始关闭容器。。。");
-//        ctx.registerShutdownHook();
+        ctx.registerShutdownHook();
     }
 }
