@@ -38,7 +38,7 @@
         <maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
         <maven-source-plugin>2.4</maven-source-plugin>
 
-        <zk.version>3.4.9</zk.version>
+        <zk.version>3.4.14</zk.version>
         <spring.boot.version>2.1.0.RELEASE</spring.boot.version>
         <spring-boot-starter-web.version>2.1.0.RELEASE</spring-boot-starter-web.version>
         <spring-boot-starter-thymeleaf.version>2.1.0.RELEASE</spring-boot-starter-thymeleaf.version>
