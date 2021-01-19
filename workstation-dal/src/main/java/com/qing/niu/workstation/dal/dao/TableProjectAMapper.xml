@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qing.niu.workstation.dal.dao.TableProjectAMapper">
+
+    <select id="selectById" resultType="com.qing.niu.workstation.dal.dao.TableProjectADO">
+       select * from table_project_a where id=#{id}
+   </select>
+
+    <insert id="insert" parameterType="com.qing.niu.workstation.dal.dao.TableProjectADO" useGeneratedKeys="true"  keyProperty="id" >
+        insert into table_project_a(name, wxid, create_time)
+        values(
+            #{name, jdbcType=VARCHAR},
+            #{wxid, jdbcType=VARCHAR},
+            #{createTime, jdbcType=TIMESTAMP}
+        )
+    </insert>
+</mapper>
