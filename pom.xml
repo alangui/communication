@@ -40,7 +40,7 @@
 
         <zk.version>3.4.9</zk.version>
         <spring.boot.version>2.1.0.RELEASE</spring.boot.version>
-        <spring-boot-starter-web.version>2.1.0.RELEASE</spring-boot-starter-web.version>
+        <spring-boot-starter-web.version>2.5.12</spring-boot-starter-web.version>
         <spring-boot-starter-thymeleaf.version>2.1.0.RELEASE</spring-boot-starter-thymeleaf.version>
         <spring-boot-starter-jetty.version>2.1.0.RELEASE</spring-boot-starter-jetty.version>
         <spring-jdbc.version>5.1.2.RELEASE</spring-jdbc.version>
